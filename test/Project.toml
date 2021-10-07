@@ -1,0 +1,6 @@
+[compat]
+NLPModelsTest = "0.4"
+
+[deps]
+NLPModelsTest = "7998695d-6960-4d3a-85c4-e1bceb8cd856"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

@@ -1,7 +1,7 @@
 ```@meta
-CurrentModule = JSOTemplate
+CurrentModule = ManualNLPModels
 ```
 
-# JSOTemplate
+# ManualNLPModels
 
-Documentation for [JSOTemplate](https://github.com/JuliaSmoothOptimizers/JSOTemplate.jl).
+Documentation for [ManualNLPModels](https://github.com/JuliaSmoothOptimizers/ManualNLPModels.jl).
