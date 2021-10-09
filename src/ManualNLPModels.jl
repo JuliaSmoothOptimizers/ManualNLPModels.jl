@@ -69,12 +69,12 @@ function NLPModel(
   )
 end
 
-function NLPModels.obj(nlp::NLPModel, x)
+function NLPModels.obj(nlp::NLPModel, x::AbstractVector)
   increment!(nlp, :neval_obj)
   nlp.obj(x)
 end
 
-function NLPModels.grad!(nlp::NLPModel, x, gx)
+function NLPModels.grad!(nlp::NLPModel, x::AbstractVector, gx::AbstractVector)
   increment!(nlp, :neval_grad)
   nlp.grad(gx, x)
 end
@@ -102,7 +102,11 @@ function NLPModels.hprod!(
   nlp.hprod(Hv, x, y, v; obj_weight = obj_weight)
 end
 
-function NLPModels.hess_structure!(nlp::NLPModel, rows, cols)
+function NLPModels.hess_structure!(
+  nlp::NLPModel,
+  rows::AbstractVector{<:Integer},
+  cols::AbstractVector{<:Integer},
+)
   rows .= nlp.Hrows
   cols .= nlp.Hcols
   rows, cols
@@ -129,27 +133,31 @@ function NLPModels.hess_coord!(
   nlp.Hvals(vals, x, y; obj_weight = obj_weight)
 end
 
-function NLPModels.cons!(nlp::NLPModel, x, cx)
+function NLPModels.cons!(nlp::NLPModel, x::AbstractVector, cx::AbstractVector)
   increment!(nlp, :neval_cons)
   nlp.cons(cx, x)
 end
 
-function NLPModels.jprod!(nlp::NLPModel, x, v, jv)
+function NLPModels.jprod!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jv::AbstractVector)
   increment!(nlp, :neval_jprod)
   nlp.jprod(jv, x, v)
 end
 
-function NLPModels.jtprod!(nlp::NLPModel, x, v, jtv)
+function NLPModels.jtprod!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jtv::AbstractVector)
   increment!(nlp, :neval_jtprod)
   nlp.jtprod(jtv, x, v)
 end
 
-function NLPModels.jac_coord!(nlp::NLPModel, x, vals)
+function NLPModels.jac_coord!(nlp::NLPModel, x::AbstractVector, vals::AbstractVector)
   increment!(nlp, :neval_jac)
   nlp.Jvals(vals, x)
 end
 
-function NLPModels.jac_structure!(nlp::NLPModel, rows, cols)
+function NLPModels.jac_structure!(
+  nlp::NLPModel,
+  rows::AbstractVector{<:Integer},
+  cols::AbstractVector{<:Integer},
+)
   rows .= nlp.Jrows
   cols .= nlp.Jcols
   rows, cols
