@@ -16,5 +16,8 @@ for problem in ["hs5", "hs6"]
     @testset "Check multiple precision" begin
       multiple_precision_nlp(nlp_from_T)
     end
+    @testset "Check dimensions" begin
+      check_nlp_dimensions(nlp_this)
+    end
   end
 end
