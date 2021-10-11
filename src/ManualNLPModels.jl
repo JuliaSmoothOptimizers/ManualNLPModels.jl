@@ -69,6 +69,54 @@ function NLPModel(
   )
 end
 
+function NLPModel(
+  x::V,
+  ℓ::V,
+  u::V,
+  obj;
+  grad = notimplemented,
+  hprod = notimplemented,
+  hess_coord = (Int[], Int[], notimplemented),
+  cons = (notimplemented, T[], T[]),
+  jprod = notimplemented,
+  jtprod = notimplemented,
+  jac_coord = (Int[], Int[], notimplemented),
+  meta_args = (),
+) where {T, V <: AbstractVector{T}}
+  Hrows, Hcols, Hvals = hess_coord
+  Jrows, Jcols, Jvals = jac_coord
+  c, lcon, ucon = cons
+  nnzh, nnzj = length(Hrows), length(Jrows)
+  meta = NLPModelMeta{T, V}(
+    length(x),
+    x0 = x,
+    lvar = ℓ,
+    uvar = u,
+    nnzj = nnzj,
+    nnzh = nnzh,
+    ncon = length(lcon),
+    lcon = lcon,
+    ucon = ucon;
+    meta_args...,
+  )
+  return NLPModel{T, V}(
+    meta,
+    Counters(),
+    obj,
+    grad,
+    hprod,
+    Hrows,
+    Hcols,
+    Hvals,
+    c,
+    jprod,
+    jtprod,
+    Jrows,
+    Jcols,
+    Jvals,
+  )
+end
+
 function NLPModels.obj(nlp::NLPModel, x::AbstractVector)
   increment!(nlp, :neval_obj)
   nlp.obj(x)
