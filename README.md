@@ -5,5 +5,12 @@
 [![Build Status](https://github.com/JuliaSmoothOptimizers/ManualNLPModels.jl/workflows/CI/badge.svg)](https://github.com/JuliaSmoothOptimizers/ManualNLPModels.jl/actions)
 [![Build Status](https://api.cirrus-ci.com/github/JuliaSmoothOptimizers/ManualNLPModels.jl.svg)](https://cirrus-ci.com/github/JuliaSmoothOptimizers/ManualNLPModels.jl)
 [![Coverage](https://codecov.io/gh/JuliaSmoothOptimizers/ManualNLPModels.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/JuliaSmoothOptimizers/ManualNLPModels.jl)
+[![DOI](https://zenodo.org/badge/413573317.svg)](https://zenodo.org/badge/latestdoi/413573317)
+
+## How to cite
+
+If you use ManualNLPMOdels.jl in your work, please cite using the format given in [CITATION.bib](CITATION.bib).
+
+## Synopsis
 
 ManualNLPModels provides an interface for manually providing functions and derivatives to create NLPModels.
