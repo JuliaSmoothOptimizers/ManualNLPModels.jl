@@ -9,7 +9,7 @@
 
 ## How to cite
 
-If you use ManualNLPMOdels.jl in your work, please cite using the format given in [CITATION.bib](CITATION.bib).
+If you use ManualNLPModels.jl in your work, please cite using the format given in [CITATION.bib](CITATION.bib).
 
 ## Synopsis
 
