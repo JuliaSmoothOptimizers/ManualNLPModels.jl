@@ -73,41 +73,41 @@ function NLPModels.hess_coord!(
   nlp.Hvals(vals, x, y; obj_weight = obj_weight)
 end
 
-function NLPModels.cons!(nlp::NLPModel, x::AbstractVector, cx::AbstractVector)
+function NLPModels.cons_nln!(nlp::NLPModel, x::AbstractVector, cx::AbstractVector)
   @lencheck nlp.meta.nvar x
-  @lencheck nlp.meta.ncon cx
-  increment!(nlp, :neval_cons)
+  @lencheck nlp.meta.nnln cx
+  increment!(nlp, :neval_cons_nln)
   nlp.cons(cx, x)
 end
 
-function NLPModels.jprod!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jv::AbstractVector)
+function NLPModels.jprod_nln!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jv::AbstractVector)
   @lencheck nlp.meta.nvar x v
-  @lencheck nlp.meta.ncon jv
-  increment!(nlp, :neval_jprod)
+  @lencheck nlp.meta.nnln jv
+  increment!(nlp, :neval_jprod_nln)
   nlp.jprod(jv, x, v)
 end
 
-function NLPModels.jtprod!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jtv::AbstractVector)
+function NLPModels.jtprod_nln!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jtv::AbstractVector)
   @lencheck nlp.meta.nvar x jtv
-  @lencheck nlp.meta.ncon v
-  increment!(nlp, :neval_jtprod)
+  @lencheck nlp.meta.nnln v
+  increment!(nlp, :neval_jtprod_nln)
   nlp.jtprod(jtv, x, v)
 end
 
-function NLPModels.jac_structure!(
+function NLPModels.jac_nln_structure!(
   nlp::NLPModel,
   rows::AbstractVector{<:Integer},
   cols::AbstractVector{<:Integer},
 )
-  @lencheck nlp.meta.nnzj rows cols
+  @lencheck nlp.meta.nln_nnzj rows cols
   rows .= nlp.Jrows
   cols .= nlp.Jcols
   rows, cols
 end
 
-function NLPModels.jac_coord!(nlp::NLPModel, x::AbstractVector, vals::AbstractVector)
+function NLPModels.jac_nln_coord!(nlp::NLPModel, x::AbstractVector, vals::AbstractVector)
   @lencheck nlp.meta.nvar x
-  @lencheck nlp.meta.nnzj vals
-  increment!(nlp, :neval_jac)
+  @lencheck nlp.meta.nln_nnzj vals
+  increment!(nlp, :neval_jac_nln)
   nlp.Jvals(vals, x)
 end
