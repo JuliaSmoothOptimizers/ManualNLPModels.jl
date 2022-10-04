@@ -80,14 +80,24 @@ function NLPModels.cons_nln!(nlp::NLPModel, x::AbstractVector, cx::AbstractVecto
   nlp.cons(cx, x)
 end
 
-function NLPModels.jprod_nln!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jv::AbstractVector)
+function NLPModels.jprod_nln!(
+  nlp::NLPModel,
+  x::AbstractVector,
+  v::AbstractVector,
+  jv::AbstractVector,
+)
   @lencheck nlp.meta.nvar x v
   @lencheck nlp.meta.nnln jv
   increment!(nlp, :neval_jprod_nln)
   nlp.jprod(jv, x, v)
 end
 
-function NLPModels.jtprod_nln!(nlp::NLPModel, x::AbstractVector, v::AbstractVector, jtv::AbstractVector)
+function NLPModels.jtprod_nln!(
+  nlp::NLPModel,
+  x::AbstractVector,
+  v::AbstractVector,
+  jtv::AbstractVector,
+)
   @lencheck nlp.meta.nvar x jtv
   @lencheck nlp.meta.nnln v
   increment!(nlp, :neval_jtprod_nln)
