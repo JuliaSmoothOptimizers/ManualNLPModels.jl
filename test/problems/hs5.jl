@@ -26,13 +26,16 @@ function hs5(::Type{T} = Float64) where {T}
     vals[2] = -sin(x[1] + x[2]) - 2
     vals .*= obj_weight
   end
+  f(x) = sin(x[1] + x[2]) + (x[1] - x[2])^2 - 3x[1] / 2 + 5x[2] / 2 + 1
+  grad(gx, x) = (gx .= cos(x[1] + x[2]) * ones(T, 2) + 2 * (x[1] - x[2]) * T[1; -1] + T[-1.5; 2.5])
+  objgrad(gx, x) = f(x), grad(gx, x)
   return NLPModel(
     zeros(T, 2),
     T[-1.5; -3],
     T[4; 3],
-    x -> sin(x[1] + x[2]) + (x[1] - x[2])^2 - 3x[1] / 2 + 5x[2] / 2 + 1,
-    grad = (gx, x) ->
-      (gx .= cos(x[1] + x[2]) * ones(T, 2) + 2 * (x[1] - x[2]) * T[1; -1] + T[-1.5; 2.5]),
+    f,
+    grad = grad,
+    objgrad = objgrad,
     hprod = hprod,
     hess_coord = ([1, 2, 2], [1, 1, 2], hess_coord),
   )

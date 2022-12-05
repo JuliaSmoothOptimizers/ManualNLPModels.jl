@@ -23,6 +23,7 @@ function hs6(::Type{T} = Float64) where {T}
     T[-1.2; 1],
     x -> (1 - x[1])^2;
     grad = (gx, x) -> gx .= [2 * (x[1] - 1); 0],
+    # objgrad explicitly not implemented
     hprod = hprod,
     hess_coord = ([1], [1], hess_coord),
     cons = ((cx, x) -> (cx[1] = 10 * (x[2] - x[1]^2); cx), T[0], T[0]),

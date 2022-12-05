@@ -1,3 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-ManualNLPModels = "30dfa513-9b2f-4fb3-9796-781eabac1617"
+JSOSolvers = "10dff2fc-5484-5881-a0e0-c90441020f8a"
+
+[compat]
+JSOSolvers = "0.9"

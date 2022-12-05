@@ -10,7 +10,8 @@ You can provide additional functions by keyword arguments.
 Here is the list of accepted function names and their signatures:
 
 Unconstrained:
-- `grad = (gx, x) -> ...`: gradient of `f` at `x`. Stores in `gx`.
+- `grad = (gx, x) -> gx`: gradient of `f` at `x`. Stores in `gx`.
+- `objgrad = (gx, x) -> (f, gx)`: `f` and gradient of `f` at `x`. Stores in `gx`.
 - `hprod = (hv, x, v; obj_weight=1) -> ...`: Hessian at `x` times vector `v`. Stores in `hv`.
 - `hess_coord = (rows, cols, (vals, x; obj_weight=1) -> ...)`: sparse Hessian at `x` in triplet format.
 
@@ -27,6 +28,7 @@ struct NLPModel{T, V} <: AbstractNLPModel{T, V}
   counters::Counters
   obj # obj(x)
   grad # grad(gx, x)
+  objgrad # objgrad(gx, x) -> (f, gx)
   hprod # hprod(hv, x, v; obj_weight::Real=1) or hprod(hv, x, y, v; obj_weight::Real=1)
   Hrows
   Hcols
@@ -47,6 +49,7 @@ function NLPModel(
   x::V,
   obj;
   grad = notimplemented,
+  objgrad = notimplemented,
   hprod = notimplemented,
   hess_coord = (Int[], Int[], notimplemented),
   cons = (notimplemented, T[], T[]),
@@ -73,7 +76,8 @@ function NLPModel(
     meta,
     Counters(),
     obj,
-    grad,
+    grad === notimplemented ? (gx, x) -> objgrad(gx, x)[2] : grad,
+    objgrad,
     hprod,
     Hrows,
     Hcols,
@@ -93,6 +97,7 @@ function NLPModel(
   u::V,
   obj;
   grad = notimplemented,
+  objgrad = notimplemented,
   hprod = notimplemented,
   hess_coord = (Int[], Int[], notimplemented),
   cons = (notimplemented, T[], T[]),
@@ -121,7 +126,8 @@ function NLPModel(
     meta,
     Counters(),
     obj,
-    grad,
+    grad === notimplemented ? (gx, x) -> objgrad(gx, x)[2] : grad,
+    objgrad,
     hprod,
     Hrows,
     Hcols,
