@@ -10,6 +10,17 @@ function NLPModels.grad!(nlp::NLPModel, x::AbstractVector, gx::AbstractVector)
   nlp.grad(gx, x)
 end
 
+function NLPModels.objgrad!(nlp::NLPModel, x::AbstractVector, gx::AbstractVector)
+  @lencheck nlp.meta.nvar x gx
+  increment!(nlp, :neval_obj)
+  increment!(nlp, :neval_grad)
+  if (nlp.objgrad === notimplemented)
+    nlp.obj(x), nlp.grad(gx, x)
+  else
+    nlp.objgrad(gx, x)
+  end
+end
+
 function NLPModels.hprod!(
   nlp::NLPModel,
   x::AbstractVector,
