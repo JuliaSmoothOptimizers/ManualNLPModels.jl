@@ -22,7 +22,7 @@ println(output)</code></pre><pre class="documenter-example-output"><code class="
   dual feasibility: 4.018046284781729e-9
   solution: [0.9999999986742657  0.9999999970013461]
   iterations: 18
-  elapsed time: 0.13964486122131348</code></pre><h3 id="Objective-and-gradient-at-the-same-time"><a class="docs-heading-anchor" href="#Objective-and-gradient-at-the-same-time">Objective and gradient at the same time</a><a id="Objective-and-gradient-at-the-same-time-1"></a><a class="docs-heading-anchor-permalink" href="#Objective-and-gradient-at-the-same-time" title="Permalink"></a></h3><pre><code class="language-julia hljs">using ManualNLPModels, JSOSolvers
+  elapsed time: 0.14684414863586426</code></pre><h3 id="Objective-and-gradient-at-the-same-time"><a class="docs-heading-anchor" href="#Objective-and-gradient-at-the-same-time">Objective and gradient at the same time</a><a id="Objective-and-gradient-at-the-same-time-1"></a><a class="docs-heading-anchor-permalink" href="#Objective-and-gradient-at-the-same-time" title="Permalink"></a></h3><pre><code class="language-julia hljs">using ManualNLPModels, JSOSolvers
 
 f(x) = (x[1] - 1)^2 + 4 * (x[2] - x[1]^2)^2
 fg!(gx, x) = begin
@@ -47,7 +47,7 @@ println(output)</code></pre><pre class="documenter-example-output"><code class="
   dual feasibility: 4.018046284781729e-9
   solution: [0.9999999986742657  0.9999999970013461]
   iterations: 18
-  elapsed time: 0.024888992309570312</code></pre><h3 id="Objective,-gradient,-and-Hessian-vector-product"><a class="docs-heading-anchor" href="#Objective,-gradient,-and-Hessian-vector-product">Objective, gradient, and Hessian-vector product</a><a id="Objective,-gradient,-and-Hessian-vector-product-1"></a><a class="docs-heading-anchor-permalink" href="#Objective,-gradient,-and-Hessian-vector-product" title="Permalink"></a></h3><pre><code class="language-julia hljs">using ManualNLPModels, JSOSolvers
+  elapsed time: 0.02515101432800293</code></pre><h3 id="Objective,-gradient,-and-Hessian-vector-product"><a class="docs-heading-anchor" href="#Objective,-gradient,-and-Hessian-vector-product">Objective, gradient, and Hessian-vector product</a><a id="Objective,-gradient,-and-Hessian-vector-product-1"></a><a class="docs-heading-anchor-permalink" href="#Objective,-gradient,-and-Hessian-vector-product" title="Permalink"></a></h3><pre><code class="language-julia hljs">using ManualNLPModels, JSOSolvers
 
 f(x) = (x[1] - 1)^2 + 4 * (x[2] - x[1]^2)^2
 fg!(gx, x) = begin
@@ -61,9 +61,9 @@ hv!(hv, x, v; obj_weight = 1.0) = begin
   h11 = 2 - 16 * x[2] + 48 * x[1]^2
   h12 = -16 * x[1]
   h22 = 8.0
-  hv[1] = h11 * v[1] + h12 * v[2]
-  hv[2] = h12 * v[1] + h22 * v[2]
-  return hv * obj_weight
+  hv[1] = (h11 * v[1] + h12 * v[2]) * obj_weight
+  hv[2] = (h12 * v[1] + h22 * v[2]) * obj_weight
+  return hv
 end
 
 nlp = NLPModel(
@@ -81,4 +81,4 @@ println(output)</code></pre><pre class="documenter-example-output"><code class="
   dual feasibility: 3.0567567125153457e-13
   solution: [0.99999999999966  0.9999999999992844]
   iterations: 10
-  elapsed time: 0.06557703018188477</code></pre></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="reference/">Reference »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Thursday 30 March 2023 15:07">Thursday 30 March 2023</span>. Using Julia version 1.8.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+  elapsed time: 0.028198957443237305</code></pre></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="reference/">Reference »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Wednesday 24 May 2023 18:33">Wednesday 24 May 2023</span>. Using Julia version 1.9.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
