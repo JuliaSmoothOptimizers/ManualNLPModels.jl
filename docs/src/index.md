@@ -84,9 +84,9 @@ hv!(hv, x, v; obj_weight = 1.0) = begin
   h11 = 2 - 16 * x[2] + 48 * x[1]^2
   h12 = -16 * x[1]
   h22 = 8.0
-  hv[1] = h11 * v[1] + h12 * v[2]
-  hv[2] = h12 * v[1] + h22 * v[2]
-  return hv * obj_weight
+  hv[1] = (h11 * v[1] + h12 * v[2]) * obj_weight
+  hv[2] = (h12 * v[1] + h22 * v[2]) * obj_weight
+  return hv
 end
 
 nlp = NLPModel(
