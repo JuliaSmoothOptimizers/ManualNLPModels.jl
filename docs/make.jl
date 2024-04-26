@@ -7,7 +7,6 @@ makedocs(;
   modules = [ManualNLPModels],
   doctest = true,
   linkcheck = false,
-  strict = true,
   authors = "Abel Soares Siqueira <abel.s.siqueira@gmail.com> and contributors",
   repo = "https://github.com/JuliaSmoothOptimizers/ManualNLPModels.jl/blob/{commit}{path}#{line}",
   sitename = "ManualNLPModels.jl",
