@@ -12,6 +12,13 @@ for problem in ["hs5", "hs6"]
     @testset "Check multiple precision" begin
       multiple_precision_nlp(nlp_from_T, linear_api = true)
     end
+    if CUDA.functional()
+      @testset "Check GPU multiple precision" begin
+        CUDA.allowscalar() do
+          multiple_precision_nlp_array(nlp_from_T, CuArray, linear_api = true)
+        end
+      end
+    end
     @testset "Check dimensions" begin
       check_nlp_dimensions(nlp_this, linear_api = true)
     end
