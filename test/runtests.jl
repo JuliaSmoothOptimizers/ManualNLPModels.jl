@@ -1,6 +1,6 @@
 using NLPModels, NLPModelsTest
 using ManualNLPModels
-using Test
+using CUDA, Test
 
 include("nlpmodelstest.jl")
 include("notimplemented.jl")
