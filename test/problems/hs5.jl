@@ -19,18 +19,16 @@ hs5() = hs5(Float64)
 hs5(::Type{T}) where {T <: Number} = hs5(Vector{T})
 function hs5(::Type{V}) where {V}
   T = eltype(V)
-  hprod(hv, x, v; obj_weight = one(T)) = (
-    hv .=
-      (-sin(x[1] + x[2]) * (v[1] + v[2]) .+ 2 * V([v[1] - v[2]; v[2] - v[1]])) *
-      obj_weight
-  )
+  hprod(hv, x, v; obj_weight = one(T)) =
+    (hv .= (-sin(x[1] + x[2]) * (v[1] + v[2]) .+ 2 * V([v[1] - v[2]; v[2] - v[1]])) * obj_weight)
   hess_coord(vals, x; obj_weight = one(T)) = begin
     vals[1] = vals[3] = -sin(x[1] + x[2]) + 2
     vals[2] = -sin(x[1] + x[2]) - 2
     vals .*= obj_weight
   end
   f(x) = sin(x[1] + x[2]) + (x[1] - x[2])^2 - 3x[1] / 2 + 5x[2] / 2 + 1
-  grad(gx, x) = (gx .= cos(x[1] + x[2]) .+ 2 * (x[1] - x[2]) * V([1; -1]) + V([-15 // 10; 25 // 10]))
+  grad(gx, x) =
+    (gx .= cos(x[1] + x[2]) .+ 2 * (x[1] - x[2]) * V([1; -1]) + V([-15 // 10; 25 // 10]))
   objgrad(gx, x) = f(x), grad(gx, x)
   return NLPModel(
     fill!(V(undef, 2), 0),
