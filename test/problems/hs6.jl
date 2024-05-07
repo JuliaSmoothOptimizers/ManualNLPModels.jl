@@ -29,7 +29,11 @@ function hs6(::Type{V}) where {V}
     # objgrad explicitly not implemented
     hprod = hprod,
     hess_coord = ([1], [1], hess_coord),
-    cons = ((cx, x) -> (cx[1] = 10 * (x[2] - x[1]^2); cx), fill!(V(undef, 1), 0), fill!(V(undef, 1), 0)),
+    cons = (
+      (cx, x) -> (cx[1] = 10 * (x[2] - x[1]^2); cx),
+      fill!(V(undef, 1), 0),
+      fill!(V(undef, 1), 0),
+    ),
     jac_coord = ([1, 1], [1, 2], (vals, x) -> (vals[1] = -20x[1]; vals[2] = 10; vals)),
     jprod = (jv, x, v) -> (jv[1] = -20x[1] * v[1] + 10v[2]; jv),
     jtprod = (jtv, x, v) -> (jtv[1] = -20x[1] * v[1]; jtv[2] = 10 * v[1]; jtv),
