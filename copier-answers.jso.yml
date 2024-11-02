@@ -1,0 +1,8 @@
+PackageName: "ManualNLPModels"
+PackageOwner: "JuliaSmoothOptimizers"
+PackageUUID: "30dfa513-9b2f-4fb3-9796-781eabac1617"
+_src_path: "https://github.com/JuliaSmoothOptimizers/JSOBestieTemplate.jl"
+_commit: "v0.13.0"
+AddBreakage: true
+AddBenchmark: false
+AddBenchmarkCI: true
