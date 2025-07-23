@@ -25,7 +25,7 @@ function hs6(::Type{V}) where {V}
   return NLPModel(
     V([-12 // 10; 1]),
     x -> (1 - x[1])^2;
-    grad = (gx, x) -> gx .= V([2 * (x[1] - 1); 0]),
+    grad = (gx, x) -> (gx[1] = 2 * (x[1] - 1); gx[2] = 0; gx),
     # objgrad explicitly not implemented
     hprod = hprod,
     hess_coord = ([1], [1], hess_coord),
