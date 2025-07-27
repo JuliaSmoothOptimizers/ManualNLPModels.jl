@@ -49,4 +49,45 @@
       end
     end
   end
+
+  blah_resid(r, x) = r .= x
+
+  @testset "Minimum NLSModel throws for everything else" begin
+    for nls in [NLSModel(x, blah_resid, 2)]
+      r = residual(nls, nls.meta.x0)
+      @test all(r .== nls.meta.x0)
+
+      # grad is not implemented because jtprod_residual is not implemented by default
+      @test_throws ErrorException grad(nls, x)
+
+      # NLS method supported but not implemented by default
+      @test_throws ErrorException jac_residual(nls, x)
+      @test_throws ErrorException jac_coord_residual(nls, x)
+      @test_throws ErrorException jprod_residual(nls, x, x)
+      @test_throws ErrorException jtprod_residual(nls, x, x)
+
+      # NLP methods not currently implemented
+      @test_throws MethodError hprod(nls, x, x)
+      @test_throws MethodError hess(nls, x)
+      @test_throws MethodError hess_coord(nls, x)
+      @test_throws MethodError cons_nln(nls, x)
+      @test_throws MethodError jac_nln(nls, x)
+      @test_throws MethodError jprod_nln(nls, x, x)
+      @test_throws MethodError jtprod_nln(nls, x, y)
+      @test_throws MethodError jac_nln_coord(nls, x)
+      @test_throws MethodError hprod(nls, x, y, x)
+      @test_throws MethodError hess(nls, x, y)
+      @test_throws MethodError hess_coord(nls, x, y)
+
+      # NLS methods not currently implemented
+      @test_throws MethodError hess_residual(nls, x)
+      @test_throws MethodError hess_structure_residual(nls)
+      @test_throws MethodError hess_coord_residual(nls, x)
+      @test_throws MethodError hprod_residual(nls, x, x)
+      @test_throws MethodError jth_hess_residual(nls, x)
+
+      # jth_hess_residual_coord doesn't seem to be exported for some reason
+      # @test_throws MethodError jth_hess_residual_coord(nls, x, 2)
+    end
+  end
 end
