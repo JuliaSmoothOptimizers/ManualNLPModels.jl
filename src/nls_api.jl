@@ -37,7 +37,7 @@ function NLPModels.jac_structure_residual!(
   rows::AbstractVector,
   cols::AbstractVector,
 )
-  NLPModels.@lencheck nls.meta.nnzj rows cols
+  NLPModels.@lencheck nls.nls_meta.nnzj rows cols
   rows .= nls.jrows
   cols .= nls.jcols
   return (rows, cols)
@@ -45,7 +45,7 @@ end
 
 function NLPModels.jac_coord_residual!(nls::NLSModel, x::AbstractVector, vals::AbstractVector)
   NLPModels.@lencheck nls.meta.nvar x
-  NLPModels.@lencheck nls.meta.nnzj vals
+  NLPModels.@lencheck nls.nls_meta.nnzj vals
   increment!(nls, :neval_jac_residual)
   nls.jvals!(vals, x)
 end

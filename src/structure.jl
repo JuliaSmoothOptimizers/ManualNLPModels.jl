@@ -115,7 +115,7 @@ end
 Creates a least-squares model with residual function `r`, and
 starting point `x`.
 You can provide bounds and additional functions by keyword arguments.
-Here is the list of accepted kwyword arguments and their default value:
+Here is the list of accepted keyword arguments and their default value:
 
 ## Arguments
 
