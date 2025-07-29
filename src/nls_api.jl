@@ -48,4 +48,5 @@ function NLPModels.jac_coord_residual!(nls::NLSModel, x::AbstractVector, vals::A
   NLPModels.@lencheck nls.nls_meta.nnzj vals
   increment!(nls, :neval_jac_residual)
   nls.jvals!(vals, x)
+  vals
 end

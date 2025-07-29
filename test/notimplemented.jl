@@ -86,7 +86,7 @@
       @test_throws MethodError hprod_residual(nls, x, x)
       @test_throws MethodError jth_hess_residual(nls, x)
 
-      # jth_hess_residual_coord doesn't seem to be exported for some reason
+      # jth_hess_residual_coord will be available in a future release of NLPModels.
       # @test_throws MethodError jth_hess_residual_coord(nls, x, 2)
     end
   end
