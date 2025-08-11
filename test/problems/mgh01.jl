@@ -13,7 +13,7 @@ function mgh01(::Type{V}) where {V}
   cols = [1, 1, 2]
   function jac_coord_residual!(vals::AbstractVector, x::AbstractVector)
     vals[1] = -1
-    vals[2] = -20x[1]
+    vals[2] = -20 * x[1]
     vals[3] = 10
     return vals
   end

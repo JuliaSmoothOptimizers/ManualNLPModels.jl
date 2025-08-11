@@ -13,7 +13,7 @@ function mgh04(::Type{V}) where {V}
   # Jx = [1    0;
   #       1    0;
   #       x[2] x[1]]
-  rows = [1, 1, 1, 2]
+  rows = [1, 2, 3, 3]
   cols = [1, 1, 1, 2]
   function jac_coord_residual!(vals::AbstractVector, x::AbstractVector)
     vals[1] = 1
@@ -25,7 +25,7 @@ function mgh04(::Type{V}) where {V}
 
   function jprod_residual!(Jv::AbstractVector, x::AbstractVector, v::AbstractVector)
     Jv[1] = v[1]
-    Jv[2] = v[2]
+    Jv[2] = v[1]
     Jv[3] = x[2] * v[1] + x[1] * v[2]
     return Jv
   end
