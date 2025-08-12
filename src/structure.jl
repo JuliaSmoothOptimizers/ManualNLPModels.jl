@@ -125,8 +125,8 @@ Here is the list of accepted keyword arguments and their default value:
 
 ## Keyword Arguments
 
-* `jv! :: J <: Function`: a function such that `jv!(u, x, v)` stores the product between the residual Jacobian at `x` and the vector `v` in `u`;
-* `jtv! :: Jt <: Function`: a function such that `jtv!(u, x, v)` stores the product between the transpose of the residual Jacobian at `x` and the vector `v` in `u`;
+* `jprod :: J <: Function`: a function such that `jprod(u, x, v)` stores the product between the residual Jacobian at `x` and the vector `v` in `u`;
+* `jtprod :: Jt <: Function`: a function such that `jtprod(u, x, v)` stores the product between the transpose of the residual Jacobian at `x` and the vector `v` in `u`;
 * `jac_coord = (rows, cols, (vals, x) -> ....)`: sparse Jacobian at `x` in triplet format.
 
 All other keyword arguments are passed through to the `NLPModelMeta` constructor.

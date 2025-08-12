@@ -86,7 +86,7 @@
       @test_throws MethodError hprod_residual(nls, x, x)
       @test_throws MethodError jth_hess_residual(nls, x)
 
-      # jth_hess_residual_coord will be available in a future release of NLPModels.
+      # TODO: Enable this test when jth_hess_residual_coord is implemented in NLPModels.
       # @test_throws MethodError jth_hess_residual_coord(nls, x, 2)
     end
   end
