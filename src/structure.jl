@@ -1,4 +1,4 @@
-export NLPModel
+export NLPModel, NLSModel
 
 """
     nlp = NLPModel(x, f; kwargs...)
@@ -108,3 +108,69 @@ function NLPModel(
 end
 
 @deprecate NLPModel(x, ℓ, u, args...; kwargs...) NLPModel(x, args...; lvar = ℓ, uvar = u, kwargs...)
+
+"""
+    model = NLSModel(x, r, nequ; kwargs...)
+
+Creates a least-squares model with residual function `r`, and
+starting point `x`.
+You can provide bounds and additional functions by keyword arguments.
+Here is the list of accepted keyword arguments and their default value:
+
+## Arguments
+
+* `x :: AbstractVector`: an initial guess;
+* `r::R<:Function`: a function such that `r(y, x)` stores the residual at `x` in `y`;
+* `nequ::Int` the number of residuals (i.e., the length of `y` above).
+
+## Keyword Arguments
+
+* `jprod :: J <: Function`: a function such that `jprod(u, x, v)` stores the product between the residual Jacobian at `x` and the vector `v` in `u`;
+* `jtprod :: Jt <: Function`: a function such that `jtprod(u, x, v)` stores the product between the transpose of the residual Jacobian at `x` and the vector `v` in `u`;
+* `jac_coord = (rows, cols, (vals, x) -> ....)`: sparse Jacobian at `x` in triplet format.
+
+All other keyword arguments are passed through to the `NLPModelMeta` constructor.
+"""
+mutable struct NLSModel{T, V, R, Jprod, Jtprod, Wi, J} <: AbstractNLSModel{T, V}
+  meta::NLPModelMeta{T, V}
+  nls_meta::NLSMeta{T, V}
+  counters::NLSCounters
+
+  resid!::R
+  jprod_resid!::Jprod
+  jtprod_resid!::Jtprod
+  jrows::Wi
+  jcols::Wi
+  jvals!::J
+end
+
+function NLSModel(
+  x::V,
+  r::R,
+  nequ::Int;
+  jprod = notimplemented,
+  jtprod = notimplemented,
+  jac_coord = (Int[], Int[], notimplemented),
+  kwargs...,
+) where {V, R}
+  T = eltype(V)
+  nvar = length(x)
+  meta = NLPModelMeta{T, V}(nvar, x0 = x; kwargs...)
+  jrows, jcols, jvals = jac_coord
+  nls_meta = NLSMeta{T, V}(nequ, nvar, x0 = x, nnzj = length(jrows))
+  Jprod = typeof(jprod)
+  Jtprod = typeof(jtprod)
+  Wi = typeof(jrows)
+  J = typeof(jvals)
+  return NLSModel{T, V, R, Jprod, Jtprod, Wi, J}(
+    meta,
+    nls_meta,
+    NLSCounters(),
+    r,
+    jprod,
+    jtprod,
+    jrows,
+    jcols,
+    jvals,
+  )
+end
